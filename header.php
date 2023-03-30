@@ -13,8 +13,6 @@
     require_once '_connec.php';
 
     $pdo = new \PDO(DSN, USER, PASS);
-
-    // A exécuter afin de tester le contenu de votre table friend
     $query = "SELECT * FROM friend";
     $statement = $pdo->query($query);
     ?>
@@ -23,7 +21,6 @@
 
     <ul>
         <?php
-        // On veut afficher notre résultat via un tableau associatif (PDO::FETCH_ASSOC)
         $friendsArray = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($friendsArray as $friend) {
