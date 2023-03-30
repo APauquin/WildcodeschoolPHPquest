@@ -23,7 +23,6 @@
 
         $query = "SELECT * FROM friend";
         $statement = $pdo->query($query);
-        // On veut afficher notre résultat via un tableau associatif (PDO::FETCH_ASSOC)
         $friendsArray = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($friendsArray as $friend) {
@@ -41,31 +40,24 @@
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $firstname = trim($_POST['firstname']);
         $lastname = trim($_POST['lastname']);
-
-        // nettoyage et validation des données soumises via le formulaire 
         if (empty($firstname) || strlen($firstname) >= 45)
             $errors[] = "Firstname is required and must be less than 45 characters";
         if (empty($lastname) || strlen($lastname) >= 45)
             $errors[] = "Last name is required and must be less than 45 characters";
         if (empty($errors)) {
-            // A exécuter afin de tester le contenu de votre table friend
             $query = 'INSERT INTO friend (firstname, lastname) VALUES (:firstname, :lastname)';
             $statement = $pdo->prepare($query);
-
-            // On lie les valeurs saisies dans le formulaire à nos placeholders
             $statement->bindValue(':firstname', $firstname, \PDO::PARAM_STR);
             $statement->bindValue(':lastname', $lastname, \PDO::PARAM_STR);
-
             $statement->execute();
-            // traitement du formulaire
-            // puis redirection
             header('Location: header.php');
+            exit();
         }
     }
 
     ?>
 
-    <?php // Affichage des éventuelles erreurs 
+    <?php 
     if (count($errors) > 0) : ?>
         <div>
             <ul>
