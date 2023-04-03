@@ -25,7 +25,7 @@
 
         foreach ($friendsArray as $friend) {
             echo "<li>";
-            echo $friend['firstname'] . ' ' . $friend['lastname'];
+            echo htmlentities($friend['firstname']) . ' ' . htmlentities($friend['lastname']);
             echo "</li>";
         }
         ?>
